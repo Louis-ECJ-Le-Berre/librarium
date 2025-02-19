@@ -4,7 +4,7 @@ from odf.opendocument import load
 from odf.table import Table, TableRow, TableCell
 from odf.text import P
 
-from utilities import creer_ligne
+from utilities import creer_ligne, lire_ligne
 
 from Document import Document
 
@@ -56,13 +56,5 @@ class Bibliotheque :
     def create_document_from_row(self, odfpy_row):
         """Prend une ligne de type odfpy, en lit les cellules et renvoie un objet document"""
 
-        liste = []
-
-        for cellule in odfpy_row.getElementsByType(TableCell):
-            text_elements = cellule.getElementsByType(P)
-            if text_elements:
-                liste.append(text_elements[0].firstChild.data)  # Ajouter le texte
-            else:
-                liste.append("")
-
+        liste = lire_ligne(odfpy_row)
         return Document(liste[0],liste[1],liste[2],liste[3],liste[4])
