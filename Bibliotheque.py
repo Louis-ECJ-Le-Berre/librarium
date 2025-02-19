@@ -18,7 +18,7 @@ class Bibliotheque :
         self.all_docs = self.get_all_documents(self.table)
 
 
-    def ajout(self, document) :
+    def ajout_document(self, document) :
         """Prend un objet document et l'ajoute dans la bibliothèque avec toutes ses informations. 
         Renvoie un objet bibliohtèque mis à jour selon la nouvelle base de données"""
 
@@ -29,6 +29,12 @@ class Bibliotheque :
         
         return Bibliotheque("BDD_Docs_Admin.ods")
 
+    def lit_document(self, odfpy_row):
+        """Prend une ligne de type odfpy, en lit les cellules et renvoie un objet document"""
+
+        liste = lire_ligne(odfpy_row)
+        return Document(liste[0],liste[1],liste[2],liste[3],liste[4])
+    
     def write(self, square, string) :
         # Ecris le contenu de string dans la square
         pass
@@ -37,8 +43,13 @@ class Bibliotheque :
         # Renvoie ce qui est contenu dans la square
         pass
 
-    def liste_mc(self):
-        """Renvoie une liste contenant une fois chaque mot-clef présent dans tous les documents"""
+    def liste_par_mc(self,mc):
+        """Renvoie une liste de tous les documents contenant un mot-clef particulier"""
+        
+
+    def get_all_mc(self):
+        """Récupère la liste de tous les mots-clefs présents dans la table, et les trie par ordre alphabétique"""
+
         liste_mc = []
 
         for doc in self.all_docs:
@@ -46,10 +57,17 @@ class Bibliotheque :
 
         liste_unique = list(set(liste_mc))
         return sort(liste_unique)
+    
+    def get_all_nature(self):
+        """Récupère la liste de toutes les natures de documents dans la table, et les trie par ordre alphabétique"""
 
-    def get_all_mc(self, table):
-        """Récupère la liste de tous les mots-clefs présents dans la table, et les trie par ordre alphabétique"""
+        liste_nature = []
 
+        for doc in self.all_docs:
+            liste_nature.append(doc.nature)
+
+        liste_unique = list(set(liste_nature))
+        return sort(liste_unique)
 
 
     def get_all_documents(self, table):
@@ -59,14 +77,7 @@ class Bibliotheque :
         rows = table.getElementsByType(TableRow)
 
         for ligne in rows :
-            new_doc = self.create_document_from_row(ligne)
+            new_doc = self.lit_document(ligne)
             liste_documents.append(new_doc)
 
         return liste_documents
-
-
-    def create_document_from_row(self, odfpy_row):
-        """Prend une ligne de type odfpy, en lit les cellules et renvoie un objet document"""
-
-        liste = lire_ligne(odfpy_row)
-        return Document(liste[0],liste[1],liste[2],liste[3],liste[4])
