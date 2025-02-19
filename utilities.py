@@ -7,14 +7,16 @@ def demande(question, liste_auto_completion = []):
     """Fais une demande à un utilisateur en permettant l'auto-complétion par l'ajout en argument d'une liste de mots, et retourne la réponse"""
     def completer_texte(texte_saisi, etat):
         options = [mot for mot in liste_auto_completion if mot.lower().startswith(texte_saisi.lower())]
-        if etat < len(options):
-            return options[etat]
-        return None
+        if etat == 0 and len(options) > 1:
+            print("\n \nSuggestions :")
+            for opt in options:
+                print(f"  {opt}")
+            print()  # Ligne vide pour séparation
+    
+        return options[etat] if etat < len(options) else None
 
     # Activer l'auto-complétion
-    readline.parse_and_bind("tab: menu-complete")  # Permet la navigation entre options
-    readline.parse_and_bind("set show-all-if-ambiguous on")  # Affiche les options dès le 1er Tab
-    readline.parse_and_bind("set completion-ignore-case on")  # Ignore la casse
+    readline.parse_and_bind("tab: complete")
     readline.set_completer(completer_texte)
 
     # Demander une information avec auto-complétion
