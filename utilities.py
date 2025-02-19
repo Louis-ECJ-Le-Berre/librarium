@@ -2,9 +2,17 @@ from odf.opendocument import load
 from odf.table import Table, TableRow, TableCell
 from odf.text import P
 import readline
+from difflib import get_close_matches
 
-def demande(question, liste_auto_completion = []):
-    """Fais une demande à un utilisateur en permettant l'auto-complétion par l'ajout en argument d'une liste de mots, et retourne la réponse"""
+def trouve_similaire(mot_propose, liste_mots = []):
+    """Trouve le mots le plus similaires à un mot donné parmi une liste de mots"""
+    similarites_trouvees = get_close_matches(mot_propose, liste_mots, 1)
+    return similarites_trouvees[0]
+
+
+def auto_completion(liste_auto_completion = []):
+    """Met en place l'auto-complétion"""
+
     def completer_texte(texte_saisi, etat):
         options = [mot for mot in liste_auto_completion if mot.lower().startswith(texte_saisi.lower())]
         if etat == 0 and len(options) > 1:
@@ -19,9 +27,34 @@ def demande(question, liste_auto_completion = []):
     readline.parse_and_bind("tab: complete")
     readline.set_completer(completer_texte)
 
+def demande(question, liste_a_comparer = []):
+    """Fais une demande à un utilisateur en permettant l'auto-complétion et en notant si un mot est similaire"""
+    
+    auto_completion(liste_a_comparer) #Active l'auto-complétion
     # Demander une information avec auto-complétion
     return input(question)
 
+def question_binaire(question):
+    # Pose une question binaire à l'utilisateur et renvoie sa réponse sous forme de booléen
+
+    print('')
+    print(question + '  [O/N]   ')
+
+    reponse = input()
+
+    if reponse == 'O' or reponse == 'o' or reponse =='oui':
+        print('\n')
+        return True
+
+    elif reponse == 'N' or reponse == 'n' or reponse == 'non':
+        print('\n')
+        return False
+
+    else :
+
+        print('\n Répondez par O (pour oui) ou N (pour Non) \n')
+        return demande_binaire(question)
+    
 def creer_ligne(liste_elements):
     """Renvoie une odfpy row contenant dans chaque cellule un élément de la liste fournie en entrée"""
     ligne = TableRow()
