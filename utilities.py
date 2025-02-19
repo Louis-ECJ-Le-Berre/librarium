@@ -12,7 +12,9 @@ def demande(question, liste_auto_completion = []):
         return None
 
     # Activer l'auto-complétion
-    readline.parse_and_bind("tab: complete")
+    readline.parse_and_bind("tab: menu-complete")  # Permet la navigation entre options
+    readline.parse_and_bind("set show-all-if-ambiguous on")  # Affiche les options dès le 1er Tab
+    readline.parse_and_bind("set completion-ignore-case on")  # Ignore la casse
     readline.set_completer(completer_texte)
 
     # Demander une information avec auto-complétion
