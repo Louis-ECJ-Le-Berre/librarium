@@ -1,6 +1,22 @@
 from odf.opendocument import load
 from odf.table import Table, TableRow, TableCell
 from odf.text import P
+import readline
+
+def demande(question, liste_auto_completion = []):
+    """Fais une demande à un utilisateur en permettant l'auto-complétion par l'ajout en argument d'une liste de mots, et retourne la réponse"""
+    def completer_texte(texte_saisi, etat):
+        options = [mot for mot in liste_auto_completion if mot.lower().startswith(texte_saisi.lower())]
+        if etat < len(options):
+            return options[etat]
+        return None
+
+    # Activer l'auto-complétion
+    readline.parse_and_bind("tab: complete")
+    readline.set_completer(completer_texte)
+
+    # Demander une information avec auto-complétion
+    return input(question)
 
 def creer_ligne(liste_elements):
     """Renvoie une odfpy row contenant dans chaque cellule un élément de la liste fournie en entrée"""
