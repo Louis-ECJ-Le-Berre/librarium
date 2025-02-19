@@ -3,6 +3,7 @@
 from odf.opendocument import load
 from odf.table import Table, TableRow, TableCell
 from odf.text import P
+from numpy import sort
 
 from utilities import creer_ligne, lire_ligne
 
@@ -36,9 +37,20 @@ class Bibliotheque :
         # Renvoie ce qui est contenu dans la square
         pass
 
-    def liste_mc(self, mc):
-        # Print la liste de tous les objets qui ont le mot-clef mc
-        pass
+    def liste_mc(self):
+        """Renvoie une liste contenant une fois chaque mot-clef présent dans tous les documents"""
+        liste_mc = []
+
+        for doc in self.all_docs:
+            liste_mc.extend(doc.mc)
+
+        liste_unique = list(set(liste_mc))
+        return sort(liste_unique)
+
+    def get_all_mc(self, table):
+        """Récupère la liste de tous les mots-clefs présents dans la table, et les trie par ordre alphabétique"""
+
+
 
     def get_all_documents(self, table):
         """Prend une table de type odfpy et renvoie une liste contenant tous les documents de cette table"""
