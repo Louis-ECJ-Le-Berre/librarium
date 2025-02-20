@@ -27,15 +27,17 @@ def auto_completion(liste_auto_completion = []):
     readline.parse_and_bind("tab: complete")
     readline.set_completer(completer_texte)
 
-def demande(question, liste_a_comparer = []):
+def question(question, liste_a_comparer = []):
     """Fais une demande à un utilisateur en permettant l'auto-complétion et en notant si un mot est similaire"""
     
     auto_completion(liste_a_comparer) #Active l'auto-complétion
     # Demander une information avec auto-complétion
-    return input(question)
+    print('')
+    print(question + ' : ')
+    return str(input())
 
 def question_binaire(question):
-    # Pose une question binaire à l'utilisateur et renvoie sa réponse sous forme de booléen
+    """Pose une question binaire à l'utilisateur et renvoie sa réponse sous forme de booléen"""
 
     print('')
     print(question + '  [O/N]   ')
@@ -53,8 +55,9 @@ def question_binaire(question):
     else :
 
         print('\n Répondez par O (pour oui) ou N (pour Non) \n')
-        return demande_binaire(question)
+        return question_binaire(question)
     
+
 def creer_ligne(liste_elements):
     """Renvoie une odfpy row contenant dans chaque cellule un élément de la liste fournie en entrée"""
     ligne = TableRow()

@@ -1,7 +1,9 @@
+from Reponse import Reponse
+
 class Document :
 
     def __init__(self, nature, categorie, annee, mois, mots_clefs):
-        # Regroupe toutes les informations contenues dans un document
+        """Regroupe toutes les informations contenues dans un document à partir de 5 string"""
         self.nature = nature
         self.categorie = categorie
         self.annee = annee

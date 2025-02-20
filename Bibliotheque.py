@@ -4,6 +4,7 @@ from odf.opendocument import load
 from odf.table import Table, TableRow, TableCell
 from odf.text import P
 from numpy import sort
+from Reponse import Reponse, ReponseMois
 
 from utilities import creer_ligne, lire_ligne
 
@@ -17,8 +18,12 @@ class Bibliotheque :
         self.table = self.bdd.spreadsheet.getElementsByType(Table)[0]
         self.all_docs = self.get_all_documents(self.table)
 
+    def ajout_document(self):
+        """Demande les informations et crée le document dans la bibliothèque"""
 
-    def ajout_document(self, document) :
+        mois = ReponseMois(15)
+
+    def sauvegarde_document(self, document) :
         """Prend un objet document et l'ajoute dans la bibliothèque avec toutes ses informations. 
         Renvoie un objet bibliohtèque mis à jour selon la nouvelle base de données"""
 
