@@ -61,6 +61,14 @@ class Bibliotheque :
 
     def liste_par_mc(self,mc):
         """Renvoie une liste de tous les documents contenant un mot-clef particulier"""
+
+        liste_doc = []
+
+        for doc in self.all_docs :
+            if mc in doc.mc :
+                liste_doc.append(doc)
+
+        return liste_doc
         
 
     def get_all_mc(self):
