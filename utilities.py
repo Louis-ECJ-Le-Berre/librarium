@@ -6,7 +6,7 @@ from difflib import get_close_matches
 
 def trouve_similaire(mot_propose, liste_mots = []):
     """Trouve le mots le plus similaires à un mot donné parmi une liste de mots"""
-    similarites_trouvees = get_close_matches(mot_propose, liste_mots, 1)
+    similarites_trouvees = get_close_matches(mot_propose, liste_mots, 1, cutoff=0.4)
     if len(similarites_trouvees) != 0 :
         return similarites_trouvees[0]
     else :
@@ -95,3 +95,14 @@ def lire_ligne(odfpy_row):
             liste.append("")
 
     return liste
+
+def from_list_to_coma_string(liste):
+    """Transforme une liste en une string contenant chaque élément séparé par un ;"""
+    string = ""
+
+    for m in liste:
+        string += m + " ; "
+
+    return string[:-2]
+
+

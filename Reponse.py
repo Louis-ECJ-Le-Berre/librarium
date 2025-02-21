@@ -1,4 +1,4 @@
-from  utilities import question
+from  utilities import question, trouve_similaire, question_binaire, from_list_to_coma_string
 
 class Reponse :
 
@@ -187,4 +187,20 @@ class ReponseMC(Reponse):
 
             mc_final += mot_formate[:-1] + " ; "
 
-        self.contenu = mc_final[:-2]
+        self.contenu = self.change_si_similaire(mc_final[:-3])
+
+    def change_si_similaire(self, saisie_mc):
+        """Regarde si parmi la saisie de mots-clefs il s'en trouve des similaires à des mots-clefs existans déjà et si l'utilisateur ne veut pas modifier sa saisie"""
+        
+        liste_mc = saisie_mc.split(" ; ")
+
+        for i in range(len(liste_mc)) :
+            mot = liste_mc[i]
+            if mot != "" :
+                similaire = trouve_similaire(mot, self.mc_existants)
+                if len(similaire) != 0 :
+                    if question_binaire("Le mot-clef -- " + similaire + " -- se trouve déjà dans la base de données. Voulez-vous remplacer -- " + mot + " -- par ce mot-clef déjà existant ?"):
+                        liste_mc[i] = similaire
+
+        return from_list_to_coma_string(liste_mc)
+
