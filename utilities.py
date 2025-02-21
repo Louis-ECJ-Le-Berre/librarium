@@ -7,7 +7,7 @@ from difflib import get_close_matches
 def trouve_similaire(mot_propose, liste_mots = []):
     """Trouve le mots le plus similaires à un mot donné parmi une liste de mots"""
     similarites_trouvees = get_close_matches(mot_propose, liste_mots, 1, cutoff=0.4)
-    if len(similarites_trouvees) != 0 :
+    if len(similarites_trouvees) != 0 and similarites_trouvees[0] != mot_propose :
         return similarites_trouvees[0]
     else :
         return []
