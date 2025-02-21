@@ -25,8 +25,8 @@ class Reponse :
 
 class ReponseMois(Reponse) :
 
-    def __init__(self):
-        super().__init__("Mois")
+    def __init__(self, bibli):
+        super().__init__("Mois", bibli)
         
     def est_valide(self):
         """Renvoie True ou False selon que la valeur est bien correcte pour un mois"""
@@ -59,8 +59,8 @@ class ReponseMois(Reponse) :
     
 class ReponseAnnee(Reponse):
 
-    def __init__(self):
-        super().__init__("Année")
+    def __init__(self, bibli):
+        super().__init__("Année", bibli)
 
     def est_valide(self):
         """Renvoie True ou False selon que la valeur est bien correcte pour une année"""
@@ -91,8 +91,8 @@ class ReponseAnnee(Reponse):
     
 class ReponseNature(Reponse):
 
-    def __init__(self):
-        super().__init__("Nature")
+    def __init__(self, bibli):
+        super().__init__("Nature", bibli)
 
     def est_valide(self):
         """Renvoie True ou False selon que la valeur est bien correcte pour une nature"""
