@@ -1,4 +1,4 @@
-from Reponse import Reponse
+from Reponse import ReponseAnnee, ReponseMois, ReponseNature, ReponseCategorie, ReponseMC
 
 class Document :
 

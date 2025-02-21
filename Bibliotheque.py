@@ -4,7 +4,7 @@ from odf.opendocument import load
 from odf.table import Table, TableRow, TableCell
 from odf.text import P
 from numpy import sort
-from Reponse import Reponse, ReponseMois
+from Reponse import ReponseAnnee, ReponseMois, ReponseNature, ReponseCategorie, ReponseMC
 
 from utilities import creer_ligne, lire_ligne
 
@@ -21,8 +21,15 @@ class Bibliotheque :
 
     def ajout_document(self):
         """Demande les informations et crée le document dans la bibliothèque"""
+        
+        mois = ReponseMois(self).contenu
+        annee = ReponseAnnee(self).contenu
+        categorie = ReponseCategorie(self).contenu
+        nature = ReponseNature(self).contenu
+        mc = ReponseMC(self).contenu
 
-        mois = ReponseMois(15)
+        document = Document(nature, categorie, annee, mois, mc)
+        self.sauvegarde_document(document)
 
     def sauvegarde_document(self, document) :
         """Prend un objet document et l'ajoute dans la bibliothèque avec toutes ses informations. 
@@ -32,8 +39,11 @@ class Bibliotheque :
         ligne = creer_ligne(liste_attributs)
         self.table.addElement(ligne)
         self.bdd.save("BDD_Docs_Admin.ods")
+
         
-        return Bibliotheque("BDD_Docs_Admin.ods")
+        # Pour mettre à jour les tables en attendant la prochaine fois où on recrée un objet bibliothèque qui utilisera le nouveau tableur tout neuf
+        self.all_docs.append(document)
+        self.all_mc = self.get_all_mc()
 
     def lit_document(self, odfpy_row):
         """Prend une ligne de type odfpy, en lit les cellules et renvoie un objet document"""
@@ -87,3 +97,4 @@ class Bibliotheque :
             liste_documents.append(new_doc)
 
         return liste_documents
+    
