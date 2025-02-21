@@ -2,10 +2,12 @@ from  utilities import question
 
 class Reponse :
 
-    def __init__(self, type):
+    def __init__(self, type, bibli):
         self.type = type
         self.categories_existantes = ["Assurances", "Citoyenneté", "Finances", "Logement", "Mobilité", "Education", "Santé", "Travail", "Famille", "Retraite", "Justice", "Culture"]
+        self.mc_existants = bibli.all_mc
         self.contenu = self.demande()
+        
 
         while not self.est_valide():
             self.contenu = self.redemande()
@@ -123,8 +125,8 @@ class ReponseNature(Reponse):
     
 class ReponseCategorie(Reponse):
 
-    def __init__(self):
-        super().__init__("Catégorie")
+    def __init__(self, bibli):
+        super().__init__("Catégorie", bibli)
 
     def est_valide(self):
         
@@ -148,3 +150,41 @@ class ReponseCategorie(Reponse):
         self.contenu = self.contenu[0].upper() + self.contenu[1:]
 
         return True
+    
+class ReponseMC(Reponse):
+
+    def __init__(self, bibli):
+        super().__init__("Mots-Clés", bibli)
+    
+    def est_valide(self):
+
+        if "  " in self.contenu:
+            return False
+        
+        return True
+
+    def demande(self):
+        return question('Quels sont les mots-clefs attachés à ce document ?', self.mc_existants)
+    
+    def redemande(self):
+        print('\nVeuillez ressaisir un ou plusieurs mots-clefs (chaque mot-clef peut être constitué de plusieurs mots séparés par des _ et chaque mot-clef est séparé par un espace)')
+        return self.demande()
+    
+    def formatage(self):
+        """Met une majuscule devant chaque mot de chaquem mot-clef et les sépare par des ; pour pouvoir être utilisés pour faire un document"""
+
+        mc_scindes = self.contenu.split(" ")
+        mc_final = ""
+
+        for mc in mc_scindes :
+            mot_formate = ""
+            mot_scinde = mc.split("_")
+
+            for mot in mot_scinde :
+                mot = mot.lower()
+                mot = mot[0].upper() + mot[1:]
+                mot_formate += mot + '_'
+
+            mc_final += mot_formate[:-1] + " ; "
+
+        self.contenu = mc_final[:-2]

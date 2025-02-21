@@ -17,6 +17,7 @@ class Bibliotheque :
         self.bdd = load(nom_BDD)
         self.table = self.bdd.spreadsheet.getElementsByType(Table)[0]
         self.all_docs = self.get_all_documents(self.table)
+        self.all_mc = self.get_all_mc()
 
     def ajout_document(self):
         """Demande les informations et crée le document dans la bibliothèque"""
