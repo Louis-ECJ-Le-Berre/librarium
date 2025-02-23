@@ -3,10 +3,14 @@ from odf.table import Table, TableRow, TableCell
 from odf.text import P
 import readline
 from difflib import get_close_matches
+import os
+from pathlib import Path
+import subprocess
+import sys
 
 def trouve_similaire(mot_propose, liste_mots = []):
     """Trouve le mots le plus similaires à un mot donné parmi une liste de mots"""
-    similarites_trouvees = get_close_matches(mot_propose, liste_mots, 1, cutoff=0.4)
+    similarites_trouvees = get_close_matches(mot_propose, liste_mots, 1, cutoff=0.5)
     if len(similarites_trouvees) != 0 and similarites_trouvees[0] != mot_propose :
         return similarites_trouvees[0]
     else :
@@ -105,4 +109,17 @@ def from_list_to_coma_string(liste):
 
     return string[:-2]
 
+def affiche_document(path_doc):
+    """Ouvre un document en fonction du système d'exploitation en donnant un Path WSL ou une string"""
 
+    path_doc = Path(path_doc)  # Assure que c'est un Path
+    subprocess.Popen(["evince", path_doc], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+def obtenir_documents_pdf(dossier):
+    """Retourne une liste des noms de fichiers PDF dans le dossier spécifié"""
+    if not os.path.exists(dossier):
+        print(f"Erreur : Le dossier {dossier} n'existe pas.")
+        return []
+    
+    # Liste les noms des fichiers PDF
+    return [f for f in os.listdir(dossier) if f.endswith('.pdf')]
