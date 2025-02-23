@@ -7,7 +7,7 @@ from numpy import sort
 from Reponse import ReponseAnnee, ReponseMois, ReponseNature, ReponseCategorie, ReponseMC
 import os
 
-from utilities import creer_ligne, lire_ligne, question_binaire, affiche_document
+from utilities import creer_ligne, lire_ligne, question_binaire, affiche_document, deplacer_fichier
 
 from Document import Document
 
@@ -39,42 +39,14 @@ class Bibliotheque :
         
 
         # Essaye de déplacer le document à sa nouvelle place
-        new_path = self.project_path / "Documents_Administratifs" / document.path
-        if self.deplacer_document(old_path, new_path):
+        
+        if self.deplacer_document(document, old_path):
             self.sauvegarde_document(document) #Si le fichier a pu être déplacé (et donc pas de doublon) on enregistre dans la base
 
-    def deplacer_document(self, old_path, new_path):
+    def deplacer_document(self, doc, old_path):
         """Essaye de déplacer le document et propose de le remplacer si déjà existant"""
-        if not old_path.exists():
-            print(f"❌ Le fichier source n'existe pas : {old_path}")
-            return False
-    
-    # Vérifie que le dossier cible existe, sinon le crée
-        if not new_path.parent.exists():
-            #print(f"❌ Le dossier de destination n'existe pas. Création du dossier : {new_path.parent}")
-            new_path.parent.mkdir(parents=True, exist_ok=True)
-        
-        if new_path.exists():
-            # Si le fichier existe déjà, on propose de le remplacer
-            affiche_document(new_path)
-            if question_binaire(f"Le chemin {new_path} est déjà occupé par un fichier. Souhaitez-vous le remplacer ?"):
-                old_path.replace(new_path)  # Remplace le fichier existant
-                print(f"✅ Le fichier a été remplacé à : {new_path}")
-                return True
-            else:
-                print("❌ Le document n'a pas été déplacé.")
-                return False
-            
-        else :
-            try :
-                old_path.rename(new_path)
-                print(f"✅ Le document a été déplacé avec succès vers : {new_path}")
-                return True
-            
-            except Exception as e:
-                # En cas d'autre erreur, on affiche un message générique
-                print(f"❌ Une erreur est survenue lors du déplacement : {e}")
-                return False
+        new_path = self.project_path / "Documents_Administratifs" / doc.path
+        return deplacer_fichier(old_path, new_path)
 
 
     def sauvegarde_document(self, document) :

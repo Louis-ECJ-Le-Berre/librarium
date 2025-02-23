@@ -6,6 +6,7 @@ class Reponse :
         self.type = type
         self.categories_existantes = ["Assurances", "Citoyenneté", "Finances", "Logement", "Mobilité", "Education", "Santé", "Travail", "Famille", "Retraite", "Justice", "Culture"]
         self.mc_existants = bibli.all_mc
+        self.natures_existantes = bibli.all_nature
         self.contenu = self.demande()
         
 
@@ -102,7 +103,7 @@ class ReponseNature(Reponse):
         return True
 
     def demande(self):
-        return question('Nature du document ?')
+        return question('Nature du document ?', self.natures_existantes)
 
     def redemande(self):
         print('\nVeuillez ressaisir une Nature (un ensemble de mots séparés uniquement par des symboles _ est attendu)')
