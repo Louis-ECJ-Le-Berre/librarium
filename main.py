@@ -25,6 +25,7 @@ if len(liste_doc_a_ranger) != 0 :
 
 
 
+
 recuperation = question_binaire("Voulez-vous récupérer des documents administratifs ?")
 
 while recuperation :

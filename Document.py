@@ -14,7 +14,7 @@ class Document :
         self.mc = self.nettoyer_mc(mots_clefs)
         self.infos = [nature, categorie, annee, mois, mots_clefs]
         self.nom = annee + '_' + mois + '_' + nature + '_LE_BERRE_Louis.pdf'
-        self.path = Path("Documents_Administratifs") / Path(categorie) / Path(nature) / Path(self.nom)
+        self.path = Path(categorie) / Path(nature) / Path(self.nom)
 
     def __str__(self):
         string = "Ce Document est un(e) " + self.nature + " dans la catégorie " + self.categorie + " datant de " + str(self.mois) + "/" + str(self.annee) + " et a pour mots-clefs : "

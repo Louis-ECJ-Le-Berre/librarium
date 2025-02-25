@@ -178,6 +178,7 @@ class ReponseMC(Reponse):
         mc_final = ""
 
         for mc in mc_scindes :
+            if mc == "" :  continue
             mot_formate = ""
             mot_scinde = mc.split("_")
 

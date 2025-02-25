@@ -29,19 +29,20 @@ class Bibliotheque :
         old_path = self.project_path / "Documents_en_Attente" / nom_du_doc
         affiche_document(old_path)
 
-        # Crée le document, l'ajoute et le sauvegarde
-        mois = ReponseMois(self).contenu
-        annee = ReponseAnnee(self).contenu
-        categorie = ReponseCategorie(self).contenu
-        nature = ReponseNature(self).contenu
-        mc = ReponseMC(self).contenu
-        document = Document(nature, categorie, annee, mois, mc)
-        
+        if question_binaire("Voulez-vous l'ajouter ?"):
+            # Crée le document, l'ajoute et le sauvegarde
+            mois = ReponseMois(self).contenu
+            annee = ReponseAnnee(self).contenu
+            categorie = ReponseCategorie(self).contenu
+            nature = ReponseNature(self).contenu
+            mc = ReponseMC(self).contenu
+            document = Document(nature, categorie, annee, mois, mc)
+            
 
-        # Essaye de déplacer le document à sa nouvelle place
-        
-        if self.deplacer_document(document, old_path):
-            self.sauvegarde_document(document) #Si le fichier a pu être déplacé (et donc pas de doublon) on enregistre dans la base
+            # Essaye de déplacer le document à sa nouvelle place
+            
+            if self.deplacer_document(document, old_path):
+                self.sauvegarde_document(document) #Si le fichier a pu être déplacé (et donc pas de doublon) on enregistre dans la base
 
     def deplacer_document(self, doc, old_path):
         """Essaye de déplacer le document et propose de le remplacer si déjà existant"""
@@ -62,6 +63,7 @@ class Bibliotheque :
         # Pour mettre à jour les tables en attendant la prochaine fois où on recrée un objet bibliothèque qui utilisera le nouveau tableur tout neuf
         self.all_docs.append(document)
         self.all_mc = self.get_all_mc()
+        self.all_nature = self.get_all_nature()
 
     def lit_document(self, odfpy_row):
         """Prend une ligne de type odfpy, en lit les cellules et renvoie un objet document"""

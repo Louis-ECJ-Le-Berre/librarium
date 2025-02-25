@@ -59,9 +59,12 @@ class Recherche:
         if index_choix == 2 : r = ReponseCategorie(self.bibli)
         if index_choix == 3 : r = ReponseAnnee(self.bibli)
         if index_choix == 4 : r = ReponseMois(self.bibli)
-        if index_choix == 5 : r = from_coma_string_to_list(ReponseMC(self.bibli))
+        if index_choix == 5 : r = ReponseMC(self.bibli)
 
-        self.criteres[index_choix - 1] = r.contenu
+        if index_choix != 5 :
+            self.criteres[index_choix - 1] = r.contenu
+        else : 
+            self.criteres[index_choix - 1] = from_coma_string_to_list(r.contenu)
 
         return True
 
@@ -78,7 +81,7 @@ class Recherche:
     def recupere_doc(self, doc):
         """Prend le document sélectionné et l'envoi dans le dossir des fichiers à récupérer"""
         
-        deplacer_fichier(doc.path, Path("Documents_Recuperes/" + doc.nom), copier = True)
+        deplacer_fichier(Path("Documents_Administratifs/") / doc.path, Path("Documents_Recuperes/" + doc.nom), copier = True)
 
     def trouve_doc(self):
         """Cherche un document à l'aide des informations de l'utilisateur et le range dans le dossier à récupérer"""
