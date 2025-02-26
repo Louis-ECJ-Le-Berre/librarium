@@ -31,4 +31,4 @@ recuperation = question_binaire("Voulez-vous récupérer des documents administr
 while recuperation :
     recherche = Recherche(bib)
     recherche.trouve_doc()
-    recuperation = question_binaire("Voulez-vous en récupérer un autre document ?")
+    recuperation = question_binaire("Voulez-vous récupérer un autre document ?")

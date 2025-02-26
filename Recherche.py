@@ -52,7 +52,7 @@ class Recherche:
         print("")
 
     def change_criteres(self):
-        index_choix, choix = demande_choix_mutiples('Quel critère voulez-vous ajouter/modifier ? ', ['Nature','Categorie','Année','Mois','Mot-clef'])
+        index_choix, choix = demande_choix_mutiples('Quel critère voulez-vous ajouter/modifier ? ', ['Nature','Categorie','Année','Mois','Mot-clef'], tri = False)
 
         if index_choix == 0 : return False
         if index_choix == 1 : r = ReponseNature(self.bibli)
@@ -103,4 +103,4 @@ class Recherche:
                     self.recupere_doc(doc)
                     index, doc = demande_choix_mutiples(doc.nom + " bien récupéré ! Un autre ?", self.doc_recherche)
 
-                if not question_binaire("Voulez-vous continuer la recherche ?") : continuer = False
+                if not question_binaire("Voulez-vous continuer cette recherche ?") : continuer = False

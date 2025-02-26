@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 import sys
 import shutil
+import numpy as np
 
 def trouve_similaire(mot_propose, liste_mots = []):
     """Trouve le mots le plus similaires à un mot donné parmi une liste de mots"""
@@ -48,7 +49,7 @@ def question_binaire(question):
     """Pose une question binaire à l'utilisateur et renvoie sa réponse sous forme de booléen"""
 
     print('')
-    print(question + '  [O/N]   ')
+    print(question + '  [o/n]   ')
 
     reponse = input()
 
@@ -120,7 +121,7 @@ def affiche_document(path_doc):
 
     path_doc = Path(path_doc)  # Assure que c'est un Path
     subprocess.Popen(["evince", path_doc], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
+    
 def obtenir_documents_pdf(dossier):
     """Retourne une liste des noms de fichiers PDF dans le dossier spécifié"""
     if not os.path.exists(dossier):
@@ -139,15 +140,21 @@ def element_en_commun(liste_1, liste_2):
     else:
         return False
     
-def demande_choix_mutiples(question, liste_reponses) :
+def demande_choix_mutiples(question, liste_reponses, tri = True) :
     """Pose une question à choix multiples à l'utilisateur et renvoie l'index et la réponse associée"""
     liste = ['Retour en arrière']
-    liste.extend(liste_reponses)
+    
+
+    if tri :
+        liste.extend(np.sort(liste_reponses))
+    else :
+        liste.extend(liste_reponses)
+    
     i=0
     print('')
     print(question)
 
-    affiche_liste_numero(liste)
+    affiche_liste_numero(liste, False)
 
     print('\n Sélectionnez le numéro correspondant à votre choix')
 
@@ -157,7 +164,7 @@ def demande_choix_mutiples(question, liste_reponses) :
         x = int(reponse)
     except ValueError :
         print('\n Répondez uniquement par un nombre\n')
-        return demande_choix_mutiples(question, liste)
+        return demande_choix_mutiples(question, liste, tri)
 
     if x < len(liste) :
         return x, liste[x]
@@ -166,11 +173,13 @@ def demande_choix_mutiples(question, liste_reponses) :
 
     else :
         print('\n Votre réponse ne fait pas partie des nombres proposés\n')
-        return demande_choix_mutiples(question, liste_reponses)
+        return demande_choix_mutiples(question, liste_reponses, tri)
     
-def affiche_liste_numero(liste) :
-    """Affiche les éléments d'une liste en les numérotant"""
+def affiche_liste_numero(liste, tri = True) :
+    """Affiche les éléments d'une liste en les numérotant et en les mettant par ordre alphabétique"""
     i=0
+    if tri :
+        liste = np.sort(liste)
 
     for i,choix in enumerate(liste):
         if isinstance(choix, str) :
