@@ -23,7 +23,27 @@ class Document :
             string += " ; "
 
         return string[:-2]
+    
+    def __lt__(self, other):
+        if isinstance(other, str) :
+            return self.nom < other
+        else : return self.nom < other.nom
 
+    def __le__(self, other):
+        if isinstance(other, str) :
+            return self.nom <= other
+        else : return self.nom <= other.nom
+
+    def __gt__(self, other):
+        if isinstance(other, str) :
+            self.nom > other
+        else : return self.nom > other.nom
+
+    def __ge__(self, other):
+        if isinstance(other, str) :
+            return self.nom >= other
+        else : return self.nom >= other.nom
+    
     def modify(self):
         #Modifie un des attributs du document
         pass
