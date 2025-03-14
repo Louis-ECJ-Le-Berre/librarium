@@ -44,8 +44,8 @@ class Recherche:
     
     def affiche_criteres(self):
         print('== Critères de recherche actuels ==')
-        print('Categorie recherchee : ', self.criteres[0])
-        print('Nature recherche : ', self.criteres[1])
+        print('Nature recherchee : ', self.criteres[0])
+        print('Categorie recherche : ', self.criteres[1])
         print('Annee recherchee : ', self.criteres[2])
         print('Mois recherche : ', self.criteres[3])
         print('Mot-clef recherche : ', from_list_to_coma_string(self.criteres[4]))
