@@ -1,6 +1,6 @@
 from Reponse import ReponseAnnee, ReponseMois, ReponseNature, ReponseCategorie, ReponseMC
 from pathlib import Path
-from utilities import affiche_document
+from utilities import affiche_document, from_list_to_coma_string
 
 
 class Document :
@@ -62,3 +62,7 @@ class Document :
 
     def voir(self):
         affiche_document(self.path)
+
+    def affiche_mc(self):
+        mc = from_list_to_coma_string(self.mc)
+        print("( Mots-clefs : " + mc + ")")

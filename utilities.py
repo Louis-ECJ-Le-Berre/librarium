@@ -185,7 +185,7 @@ def affiche_liste_numero(liste, tri = True) :
         if isinstance(choix, str) :
             print('[ ' + str(i) + ' ]   ' + choix)
         else :
-            print('[ ' + str(i) + ' ]   ' + choix.nom)
+            print('[ ' + str(i) + ' ]   ' + choix.nom + " ( " + from_list_to_coma_string(np.sort(choix.mc)) + " )" )
 
 def deplacer_fichier(old_path, new_path, copier=False):
     """Essaye de déplacer ou de copier un fichier d'un point à un autre et propose de le remplacer si déjà existant.
