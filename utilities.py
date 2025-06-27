@@ -236,4 +236,3 @@ def deplacer_fichier(old_path, new_path, copier=False):
         except Exception as e:
             print(f"❌ Une erreur est survenue lors de l'opération : {e}")
             return False
-

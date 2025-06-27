@@ -5,6 +5,7 @@ from odf.table import Table, TableRow, TableCell
 from odf.text import P
 from numpy import sort
 from Reponse import ReponseAnnee, ReponseMois, ReponseNature, ReponseCategorie, ReponseMC
+from Recherche import Recherche
 import os
 
 from utilities import creer_ligne, lire_ligne, question_binaire, affiche_document, deplacer_fichier
@@ -35,7 +36,7 @@ class Bibliotheque :
             annee = ReponseAnnee(self).contenu
             categorie = ReponseCategorie(self).contenu
             nature = ReponseNature(self).contenu
-            mc = ReponseMC(self).contenu
+            mc = ReponseMC(self, nature, self.get_mc_selon_nature(nature)).contenu
             document = Document(nature, categorie, annee, mois, mc)
             
 
@@ -134,3 +135,16 @@ class Bibliotheque :
 
         return liste_documents
     
+    def get_mc_selon_nature(self, nature):
+        doc_filtre = Recherche(self, nature).doc_recherche
+
+        liste_mc = []
+
+        for doc in doc_filtre:
+            print(doc.mc)
+            liste_mc.extend(doc.mc)
+
+        liste_unique = list(set(liste_mc))
+        sort(liste_unique)
+
+        return liste_unique

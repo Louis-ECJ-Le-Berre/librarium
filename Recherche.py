@@ -4,10 +4,10 @@ from pathlib import Path
 
 class Recherche:
 
-    def __init__(self, bibli) :
+    def __init__(self, bibli, critere_nature = "", critere_categorie = "", critere_annee = "", critere_mois = "", critere_mot_clef = []) :
         self.bibli = bibli
         self.all_docs = self.bibli.all_docs
-        self.criteres = ["", "", "", "", []]
+        self.criteres = [critere_nature, critere_categorie, critere_annee, critere_mois, critere_mot_clef]
         self.doc_recherche = self.filtre()
 
     def __str__(self):

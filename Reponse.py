@@ -1,9 +1,11 @@
 from  utilities import question, trouve_similaire, question_binaire, from_list_to_coma_string
 
+
 class Reponse :
 
-    def __init__(self, type, bibli):
-        self.type = type
+    def __init__(self, rp_type, bibli):
+        self.type = rp_type
+        self.bibli = bibli
         self.categories_existantes = ["Assurances", "Citoyenneté", "Finances", "Logement", "Mobilité", "Education", "Santé", "Travail", "Famille", "Retraite", "Justice", "Culture"]
         self.mc_existants = bibli.all_mc
         self.natures_existantes = bibli.all_nature
@@ -21,7 +23,7 @@ class Reponse :
     def formatage(self):
         """Traite la réponse de l'utilisateur et la formate pour qu'elle puisse être utilisée correctement pour créer un objet"""
 
-        #Le principe est qu'on peut se baser sur des fonctions définies uniquement dan sles sous-classes
+        #Le principe est qu'on peut se baser sur des fonctions définies uniquement dans les sous-classes
 
 
 class ReponseMois(Reponse) :
@@ -154,7 +156,9 @@ class ReponseCategorie(Reponse):
     
 class ReponseMC(Reponse):
 
-    def __init__(self, bibli):
+    def __init__(self, bibli, nature_proposee, mc_connus = []):
+        self.mc_connus = mc_connus
+        self.nature_proposee = nature_proposee
         super().__init__("Mots-Clés", bibli)
     
     def est_valide(self):
@@ -165,7 +169,11 @@ class ReponseMC(Reponse):
         return True
 
     def demande(self):
-        return question('Quels sont les mots-clefs attachés à ce document ?', self.mc_existants)
+        print(self.mc_connus)
+        if self.mc_connus != [] :
+            print("Pour un document de type " + self.nature_proposee + " les mots-clefs habituels sont : \n" + from_list_to_coma_string(self.mc_connus))
+        
+        return question('\nQuels sont les mots-clefs attachés à ce document ?', self.mc_existants)
     
     def redemande(self):
         print('\nVeuillez ressaisir un ou plusieurs mots-clefs (chaque mot-clef peut être constitué de plusieurs mots séparés par des _ et chaque mot-clef est séparé par un espace)')
