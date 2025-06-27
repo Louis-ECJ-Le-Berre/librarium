@@ -141,7 +141,6 @@ class Bibliotheque :
         liste_mc = []
 
         for doc in doc_filtre:
-            print(doc.mc)
             liste_mc.extend(doc.mc)
 
         liste_unique = list(set(liste_mc))
