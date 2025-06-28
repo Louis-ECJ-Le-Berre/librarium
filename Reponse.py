@@ -156,7 +156,7 @@ class ReponseCategorie(Reponse):
     
 class ReponseMC(Reponse):
 
-    def __init__(self, bibli, nature_proposee, mc_connus = []):
+    def __init__(self, bibli, nature_proposee = "", mc_connus = []):
         self.mc_connus = mc_connus
         self.nature_proposee = nature_proposee
         super().__init__("Mots-Clés", bibli)
